@@ -6,8 +6,8 @@ def tagMatchRules = [
       [meType: 'SERVICE']
     ],
     tags : [
-      [context: 'CONTEXTLESS', key: 'app', value: 'carts'],
-      [context: 'CONTEXTLESS', key: 'environment', value: 'dev']
+      [context: 'CONTEXTLESS', key: 'App', value: 'carts'],
+      [context: 'CONTEXTLESS', key: 'Environment', value: 'dev']
     ]
   ]
 ]
@@ -116,7 +116,7 @@ pipeline {
           script {
             def status = executeJMeter ( 
               scriptName: 'jmeter/basiccheck.jmx', 
-              resultsDir: "HealthCheck_${env.APP_NAME}",
+              resultsDir: "HealthCheck_${env.APP_NAME}_${BUILD_NUMBER}",
               serverUrl: "${env.APP_NAME}.dev", 
               serverPort: 80,
               checkPath: '/health',
@@ -145,7 +145,7 @@ pipeline {
           script {
             def status = executeJMeter (
               scriptName: "jmeter/${env.APP_NAME}_load.jmx", 
-              resultsDir: "FuncCheck_${env.APP_NAME}",
+              resultsDir: "FuncCheck_${env.APP_NAME}_${BUILD_NUMBER}",
               serverUrl: "${env.APP_NAME}.dev", 
               serverPort: 80,
               checkPath: '/health',
